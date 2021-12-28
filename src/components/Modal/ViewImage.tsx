@@ -24,7 +24,7 @@ export function ModalViewImage({
       <ModalOverlay />
       <ModalContent>
         <ModalBody>
-          <Image src={imgUrl} maxW={900} maxH={600} />
+          <Image src={imgUrl} maxWidth={900} maxHeight={600} w="100%" />
         </ModalBody>
         <ModalFooter>
           <Link href={imgUrl} isExternal>

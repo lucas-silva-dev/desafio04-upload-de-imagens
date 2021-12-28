@@ -16,6 +16,12 @@ type ValidateProps = {
   type?: string;
 };
 
+interface NewImageProps {
+  url: string;
+  title: string;
+  description: string;
+}
+
 export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
   const [imageUrl, setImageUrl] = useState('');
   const [localImageUrl, setLocalImageUrl] = useState('');
@@ -60,7 +66,8 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
 
   const queryClient = useQueryClient();
   const mutation = useMutation(
-    (newImage: Record<string, unknown>) => api.post('/api/images', newImage),
+    (newImage: NewImageProps) =>
+      api.post('/api/images', { ...newImage, url: imageUrl }),
     {
       onSuccess: () => queryClient.invalidateQueries('images'),
     }
@@ -70,7 +77,7 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
     useForm();
   const { errors } = formState;
 
-  const onSubmit = async (data: Record<string, unknown>): Promise<void> => {
+  const onSubmit = async (data: NewImageProps): Promise<void> => {
     try {
       if (!imageUrl) {
         toast({
